@@ -1,1 +1,1 @@
-export {usePublicaciones} from './usePublicaciones';
+export {usePublicaciones} from './usePublicaciones.jsx';
