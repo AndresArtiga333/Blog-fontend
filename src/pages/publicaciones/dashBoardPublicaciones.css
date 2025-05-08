@@ -5,7 +5,6 @@ body {
     background-color: #0000;
 }
 
-/* Asegurarse que el root tenga espacio suficiente */
 #root {
     width: 100%;
     display: flex;
@@ -13,33 +12,29 @@ body {
     align-items: center;
 }
 
-/* Barra de navegación */
 .navbar {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     padding: 10px;
-    margin-top: 0; /* Elimina el margen superior para subir la barra */
+    margin-top: 0;
 }
 
-/* Estilo del contenedor de la barra de navegación */
 .navbar-header {
     background-color: #ffffff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 100%;
     margin-bottom: 0;
-    color: #cf00c8  /* Asegura que no haya un margen inferior extra */
+    color: #cf00c8  
 }
 
-/* Ajuste para centrar el contenido dentro del contenedor */
 .navbar-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 10px 20px;
 }
 
-/* Estilos de los botones de navegación */
 .navbar-nav {
     display: flex;
     justify-content: space-between;
@@ -47,10 +42,9 @@ body {
     width: 100%;
 }
 
-/* Estilo de los botones de navegación */
 .nav-button {
     font-size: 16px;
-    color: #5a5a5a; /* Color principal para todos los textos */
+    color: #5a5a5a; 
     margin: 0 10px;
     padding: 8px 15px;
     cursor: pointer;
@@ -63,7 +57,6 @@ body {
     border-radius: 5px;
 }
 
-/* Estilo de los dropdowns */
 .nav-button.dropdown {
     position: relative;
 }
@@ -91,14 +84,13 @@ body {
     border-radius: 5px;
     font-size: 14px;
     background-color: #ffffff;
-    color: #5a5a5a; /* Color para el texto del select */
+    color: #5a5a5a;
 }
 
 .nav-button.dropdown select:hover {
     border-color: #888;
 }
 
-/* Estilo del botón de reset */
 .nav-button:focus {
     outline: none;
 }
@@ -126,7 +118,6 @@ body {
     display: grid;
 }
 
-/* Para usar un <ul><li> dentro del dropdown */
 .nav-button.dropdown .dropdown-content ul {
     list-style: none;
     margin: 0;
@@ -139,7 +130,7 @@ body {
     cursor: pointer;
     border-radius: 3px;
     transition: background 0.2s;
-    color: #c800c8; /* Color para los items del dropdown */
+    color: #c800c8; 
 }
 
 .nav-button.dropdown .dropdown-content li:hover {
@@ -157,9 +148,8 @@ body {
     row-gap: 0.25rem;
 }
 
-/* Estilo adicional para los textos de filtrado */
 .filter-options {
-    color: #5a5a5a; /* Asegura que los textos de filtrado tengan el mismo color */
+    color: #5a5a5a; 
     font-size: 16px;
 }
 
