@@ -1,57 +1,62 @@
-import { useState, useEffect } from 'react';
-import { buscarPublicacionPorId, agregarComentario } from './../../services/api.jsx';
+import { useState, useEffect, useCallback } from 'react';
+import {
+  buscarPublicacionPorId,
+  agregarComentario as apiAgregarComentario
+} from '../../services/api.jsx';
 
-const usePublicacion = (id = '') => {
+export default function usePublicacion(id = '') {
   const [publicacion, setPublicacion] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loading, setLoading]         = useState(false);
+  const [error, setError]             = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    if (!id) return;
+    setLoading(true);
+    setError(null);
     try {
-      setLoading(true);
-      const response = await buscarPublicacionPorId(id);
-      if (response?.error) throw new Error(response.message);
-      setPublicacion(response.publicacion || null);
+      const resp = await buscarPublicacionPorId(id);
+      if (resp.error) throw new Error(resp.message);
+      setPublicacion(resp.publicacion);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleAgregarComentario = async (nuevoComentario) => {
-    try {
-      setIsSubmitting(true);
-      const response = await agregarComentario(id, nuevoComentario);
-      if (response.error) throw new Error(response.message);
-      
-      // Actualización optimista
-      setPublicacion(prev => ({
-        ...prev,
-        comentarios: [...prev.comentarios, response.comentario]
-      }));
-      return true;
-    } catch (err) {
-      setError(err.message);
-      return false;
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  useEffect(() => {
-    if (id) fetchData();
   }, [id]);
 
-  return { 
-    publicacion, 
-    loading, 
-    error,
-    agregarComentario: handleAgregarComentario,
-    isSubmitting,
-    refetch: fetchData
-  };
-};
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
-export default usePublicacion;
+  const handleAgregarComentario = useCallback(
+    async ({ autor, contenido }) => {
+      if (!id) return false;
+      setIsSubmitting(true);
+      try {
+        const resp = await apiAgregarComentario(id, { autor, contenido });
+        if (resp.error) throw new Error(resp.message);
+        setPublicacion(prev => ({
+          ...prev,
+          comentarios: [...(prev?.comentarios || []), resp.comentario]
+        }));
+        return true;
+      } catch (err) {
+        setError(err.message);
+        return false;
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [id]
+  );
+
+  return {
+    publicacion,
+    loading,
+    error,
+    refetch: fetchData,
+    agregarComentario: handleAgregarComentario,
+    isSubmitting
+  };
+}
