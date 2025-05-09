@@ -20,3 +20,33 @@ export const listarPublicaciones = async (data = {}) => {
       };
     }
   };
+
+
+  export const buscarPublicacionPorId = async (id) => {
+    try {
+      const response = await apiClient.get(
+        `/publicaciones/buscarPublicacionPorId/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || error.message,
+      };
+    }
+  };
+  
+  export const agregarComentario = async (pid, { autor, contenido }) => {
+    try {
+      const response = await apiClient.post(
+        `/comentarios/agregarComentarios/${pid}`,
+        { autor, contenido }
+      );
+      return response.data;
+    } catch (error) {
+      return {
+        error: true,
+        message: error.response?.data?.message || error.message,
+      };
+    }
+  };

@@ -1,7 +1,18 @@
-import React from "react";
-import DashboardPublicaciones from "./pages/publicaciones/DashBoardPublicaciones";
+import { Navigate } from 'react-router-dom';
+import DashboardPublicaciones from './pages/publicaciones/DashBoardPublicaciones.jsx';
+import DetallePublicacion   from './pages/publicaciones/DetallePublicacion.jsx';
 
 export const routes = [
-    { path : "/*", element: <DashboardPublicaciones /> }
-]
-export default routes
+  {
+    path: '/publicaciones/:id',
+    element: <DetallePublicacion />
+  },
+  {
+    path: '/publicaciones',
+    element: <DashboardPublicaciones />
+  },
+  {
+    path: '*',
+    element: <Navigate to="/publicaciones" replace />
+  }
+];

@@ -1,94 +1,47 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import usePublicaciones from '../../shared/hooks/usePublicaciones.jsx';
 import PropTypes from 'prop-types';
-import '../../pages/publicaciones/DashBoardPublicaciones.css';
 
 const PublicacionesList = ({ categoria = '', curso = '' }) => {
   const { publicaciones, loading, error } = usePublicaciones(categoria, curso);
+  const navigate = useNavigate();
 
-  if (loading) {
-    return (
-      <div className="loading-state">
-        <div className="spinner"></div>
-        <p>Cargando publicaciones...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="error-state">
-        <p>Error al cargar las publicaciones:</p>
-        <p className="error-message">{error}</p>
-      </div>
-    );
-  }
-
-  if (!publicaciones || publicaciones.length === 0) {
-    return (
-      <div className="empty-state">
-        <p>No se encontraron publicaciones</p>
-        {categoria || curso ? (
-          <p>Intenta con otros criterios de búsqueda</p>
-        ) : null}
-      </div>
-    );
-  }
+  if (loading) return <p>Cargando publicaciones…</p>;
+  if (error)   return <p>Error: {error}</p>;
+  if (!publicaciones.length) return <p>No hay publicaciones.</p>;
 
   return (
     <div className="publicaciones-container">
-      {publicaciones.map((publicacion, index) => {
-        const keyId = publicacion._id ?? index;
+      {publicaciones.map(pub => (
+        <article key={pub._id} className="publicacion-card">
+          <h2
+            className="publicacion-titulo"
+            style={{ cursor: 'pointer' }}
+            onClick={() => navigate(`/publicaciones/${pub._id}`)}
+          >
+            {pub.titulo}
+          </h2>
+          <p className="publicacion-descripcion">
+            {pub.contenido}
+          </p>
 
-        if (!publicacion._id) {
-          console.warn('Publicación sin PID:', publicacion);
-        }
-
-        return (
-          <article key={keyId} className="publicacion-card">
-            <h2 className="publicacion-titulo">
-              <a
-                href={publicacion.enlace || '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Leer más sobre ${publicacion.titulo}`}
-              >
-                {publicacion.titulo || 'Título no disponible'}
-              </a>
-            </h2>
-            <div className="publicacion-meta">
-              <span className="publicacion-fecha">
-                {publicacion.fecha ? `on ${publicacion.fecha}` : 'Fecha no disponible'}
-              </span>
-              {publicacion.categoria && (
-                <span className="publicacion-categoria">
-                  Categoria: {publicacion.categoria}
-                </span>
-              )}
-            </div>
-
-            {publicacion.tags?.length > 0 && (
-              <div className="publicacion-tags">
-                {publicacion.tags.map((tag, idx) => (
-                  <span
-                    key={`${keyId}-tag-${idx}`} 
-                    className="tag"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
+          <div className="publicacion-meta">
+            <span className="publicacion-autor">{pub.autor}</span>
+            <span className="publicacion-fecha">on {pub.fecha}</span>
+            {pub.categoria && (
+              <span className="publicacion-categoria">in {pub.categoria}</span>
             )}
-          </article>
-        );
-      })}
+          </div>
+        </article>
+      ))}
     </div>
   );
 };
 
 PublicacionesList.propTypes = {
   categoria: PropTypes.string,
-  curso: PropTypes.string
+  curso:     PropTypes.string
 };
 
 export default PublicacionesList;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import usePublicaciones from './../../shared/hooks/usePublicaciones'; // Asegúrate de importar tu CSS
+import usePublicaciones from './../../shared/hooks/usePublicaciones'; 
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -14,15 +14,6 @@ export const Navbar = () => {
       <div className="navbar-container">
         <nav className="navbar">
           <div className="navbar-nav">
-            {/* Botón para listar todas las publicaciones */}
-            <button
-              onClick={() => { setCategoria(""); setCurso(""); }}
-              className="nav-button list-all"
-            >
-              Listar todas las publicaciones
-            </button>
-
-            {/* Dropdown para Filtrar por Categoría */}
             <div className="nav-button dropdown">
               <span>Filtrar por categoría</span>
               <div className="dropdown-content">
@@ -35,8 +26,6 @@ export const Navbar = () => {
                 </ul>
               </div>
             </div>
-
-            {/* Dropdown para Filtrar por Curso */}
             <div className="nav-button dropdown">
               <span>Filtrar por curso</span>
               <div className="dropdown-content">
