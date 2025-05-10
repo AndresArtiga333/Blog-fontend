@@ -1,39 +1,60 @@
-import { useEffect, useState } from 'react';
-import { buscarPublicacionPorId } from './../../services/api.jsx';
+import { useState, useEffect, useCallback } from 'react';
+import { buscarPublicacionPorId, agregarComentario as apiAgregarComentario } from '../../services/api.jsx';
 
 const usePublicacion = (id = '') => {
-    const [publicacion, setPublicacion] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-  
-    const fetchData = async () => {
+  const [publicacion, setPublicacion] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    if (!id) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const resp = await buscarPublicacionPorId(id);
+      if (resp.error) throw new Error(resp.message);
+      setPublicacion(resp.publicacion);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleAgregarComentario = useCallback(
+    async ({ autor, contenido }) => {
+      if (!id) return false;
+      setIsSubmitting(true);
+      setError(null);
       try {
-        setLoading(true);
-        setError(null);
-        const response = await buscarPublicacionPorId(id);
-        
-        if (response?.error) {
-          setError(response.message);
-        } else {
-          setPublicacion(response.publicacion || null);
-        }
+        const resp = await apiAgregarComentario(id, { autor, contenido });
+        if (resp.error) throw new Error(resp.message);
+
+        await fetchData();
+        return true;
       } catch (err) {
         setError(err.message);
+        return false;
       } finally {
-        setLoading(false);
+        setIsSubmitting(false);
       }
-    };
-  
-    useEffect(() => {
-      if (id) fetchData();
-    }, [id]);
-  
-    return { 
-      publicacion, 
-      loading, 
-      error, 
-      refetch: fetchData  // Añade esta función
-    };
-  };
+    },
+    [id, fetchData]
+  );
 
-  export default usePublicacion;
+  return {
+    publicacion,
+    loading,
+    error,
+    refetch: fetchData,
+    agregarComentario: handleAgregarComentario,
+    isSubmitting
+  };
+};
+
+export default usePublicacion;

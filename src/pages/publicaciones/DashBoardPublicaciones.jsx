@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "@/components/navs/Navbar";
 import DashboardPublicaciones from "../../components/publicaciones/DashboardPublicaciones";
-import "./dashBoardPublicaciones.css";
+import '../../assets/estilonar.css';
 
 export const DashboardPublicacionesPage = () => {
     return (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { listarPublicaciones } from './../../services/api.jsx';
 
 const usePublicaciones = (categoria = '', curso = '') => {
@@ -11,14 +11,11 @@ const usePublicaciones = (categoria = '', curso = '') => {
       try {
         setLoading(true);
         setError(null);
-        
-        // Prepara los datos para el body (no uses 'params')
-        const requestData = {
-          ...(categoria && { categoria }),
-          ...(curso && { curso })
-        };
+        const filtros = {};
+        if (categoria) filtros.categoria = categoria.toUpperCase();
+        if (curso) filtros.curso = curso.toUpperCase();
 
-        const response = await listarPublicaciones(requestData);
+        const response = await listarPublicaciones(filtros);
         
         if (response?.error) {
           setError(response.message || "Error al obtener publicaciones");
@@ -33,7 +30,7 @@ const usePublicaciones = (categoria = '', curso = '') => {
     };
 
     traerPublicaciones();
-  }, [categoria, curso]); 
+  }, [categoria, curso]);
 
   return { publicaciones, loading, error };
 };
