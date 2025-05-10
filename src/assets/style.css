@@ -1,0 +1,172 @@
+/* ================== GLOBAL ================== */
+#root {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  color-scheme: dark;
+  background-image: url("../assets/img/descarga.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  z-index: 0;
+  height: 100vh;
+}
+
+/* ================== COMPONENTES GENERALES ================== */
+.detalle-publicacion,
+.publicacion-card {
+  background-color: rgba(30, 30, 30, 0.95);
+  color: #eaeaea;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* ================== TEXTOS ================== */
+.publicacion-titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #eaeaea;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.publicacion-titulo:hover {
+  color: #31CB00;
+}
+
+.publicacion-descripcion,
+.publicacion-autor,
+.publicacion-fecha,
+.publicacion-categoria {
+  color: #ccc;
+}
+
+.publicacion-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  font-size: 0.85rem;
+  color: #31CB00;
+}
+
+.publicacion-autor,
+.publicacion-fecha,
+.publicacion-categoria {
+  background-color: #2b2b2b;
+  color: #31CB00;
+}
+
+/* ================== COMENTARIOS ================== */
+.comentario {
+  background-color: rgba(60, 60, 60, 0.9);
+  color: #e0e0e0;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin: 1rem 0;
+}
+.comentario:hover {
+  background-color: rgba(80, 80, 80, 0.9);
+}
+
+.comentario strong {
+  color: #119822;
+}
+
+/* ================== FORMULARIOS ================== */
+.form-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #119822;
+  margin: 3rem 0 1.5rem;
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #31CB00;
+}
+
+.form-input,
+.form-textarea,
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1rem;
+  color: #152614;
+  background-color: white;
+  transition: border-color 0.3s;
+  box-shadow: 0 4px 8px rgba(72, 194, 78, 0.3);
+  margin: 1rem 0;
+}
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #119822;
+  box-shadow: 0 0 4px #31CB00;
+}
+
+.submit-button,
+button[type="submit"] {
+  background-color: #31CB00;
+  color: white;
+  padding: 0.8rem 1.4rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover,
+button[type="submit"]:hover {
+  background-color: #31CB00;
+}
+
+/* ================== NAVEGACIÓN ================== */
+.volver-link {
+  color: #ffffff;
+  display: inline-block;
+  margin-top: 2rem;
+  transition: color 0.3s;
+}
+
+.volver-link:hover {
+  color: #31CB00;
+}
+
+/* ================== CONTENEDOR DE PUBLICACIONES ================== */
+.publicaciones-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
